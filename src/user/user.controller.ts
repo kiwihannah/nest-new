@@ -1,16 +1,15 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ObjectId } from 'mongoose';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UserController {
@@ -22,17 +21,17 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') _id: ObjectId) {
-    return this.userService.findOne(_id);
+  findOne(@Param('id') userId: number) {
+    return this.userService.findOne(userId);
   }
 
   @Patch(':id')
-  update(@Param('id') _id: ObjectId, @Body() dto: UpdateUserDto) {
-    return this.userService.update(_id, dto);
+  update(@Param('id') userId: number, @Body() dto: UpdateUserDto) {
+    return this.userService.update(userId, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') _id: ObjectId) {
-    return this.userService.remove(_id);
+  remove(@Param('id') userId: number) {
+    return this.userService.remove(userId);
   }
 }

@@ -1,30 +1,34 @@
 import { IsString, IsDate, IsInt, IsBoolean } from 'class-validator';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { Book } from 'src/book/entities/book.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm';
 
-export type UserDocument = User & Document;
-
-@Schema()
+@Entity({ name: 'users', synchronize: true })
 export class User {
-  @Prop({ type: String })
+  @ApiProperty()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ApiProperty()
   @IsString()
+  @Column()
   email: string;
 
-  @Prop({ type: String })
+  @ApiProperty()
   @IsInt()
+  @Column()
   password: string;
 
-  @Prop()
-  borrowedBooks: Book[];
-
-  @Prop()
+  @ApiProperty()
   @IsBoolean()
+  @Column()
   createdAt: boolean;
 
-  @Prop()
+  @ApiProperty()
   @IsDate()
+  @Column()
   updatedAt: Date;
-}
 
-export const UserSchema = SchemaFactory.createForClass(User);
+  @OneToMany(() => Book, (Book) => Book.user)
+  book: Book[];
+}

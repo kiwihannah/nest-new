@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ObjectId } from 'mongoose';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -27,17 +26,17 @@ export class BookController {
   }
 
   @Get(':id')
-  findOne(@Param('id') _id: ObjectId) {
-    return this.bookService.findOne(_id);
+  findOne(@Param('id') bookId: number) {
+    return this.bookService.findOne(bookId);
   }
 
   @Patch(':id')
-  update(@Param('id') _id: ObjectId, @Body() dto: UpdateBookDto) {
-    return this.bookService.update(_id, dto);
+  update(@Param('id') bookId: number, @Body() dto: UpdateBookDto) {
+    return this.bookService.update(bookId, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') _id: ObjectId) {
-    return this.bookService.remove(_id);
+  remove(@Param('id') bookId: number) {
+    return this.bookService.remove(bookId);
   }
 }

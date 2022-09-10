@@ -1,31 +1,40 @@
 import { IsString, IsDate, IsInt, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
 
-export type BookDocument = Book & Document;
-
-@Schema()
+@Entity({ name: 'books', synchronize: true })
 export class Book {
-  @Prop({ type: String })
+  @ApiProperty()
+  @IsInt()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ApiProperty()
   @IsString()
+  @Column()
   title: string;
 
-  @Prop({ type: String })
+  @ApiProperty()
   @IsInt()
+  @Column()
   author: string;
 
-  @Prop()
+  @ApiProperty()
   @IsBoolean()
+  @Column()
   isAvailable: boolean;
 
-  @Prop()
+  @ApiProperty()
   @IsDate()
+  @Column()
   createdAt: Date;
 
-  @Prop()
+  @ApiProperty()
   @IsDate()
+  @Column()
   UpdatedAt: Date;
-}
 
-export const BookSchema = SchemaFactory.createForClass(Book);
+  @ManyToOne(() => User, (user) => user.id)
+  user: User;
+}

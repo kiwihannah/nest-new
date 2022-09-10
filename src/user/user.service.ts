@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ObjectId } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 import { UserRepository } from './repository/user.repository';
 
 @Injectable()
@@ -9,18 +11,18 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   create(dto: CreateUserDto) {
-    return this.userRepository.create(dto);
+    return this.userRepository.createOne(dto);
   }
 
-  findOne(_id: ObjectId) {
-    return this.userRepository.findOne(_id);
+  findOne(userId: number) {
+    return this.userRepository.findOnebyId(userId);
   }
 
-  update(_id: ObjectId, dto: UpdateUserDto) {
-    return this.userRepository.update(_id);
+  update(userId: number, dto: UpdateUserDto) {
+    return this.userRepository.findOneByIdAndUpdate(userId, dto);
   }
 
-  remove(_id: ObjectId) {
-    return this.userRepository.delete(_id);
+  remove(userId: number) {
+    return this.userRepository.delete(userId);
   }
 }
