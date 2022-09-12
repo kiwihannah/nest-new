@@ -1,5 +1,5 @@
 import { IsString, IsDate, IsInt, IsBoolean } from 'class-validator';
-import { Book } from 'src/book/entities/book.entity';
+import { Book } from '../../book/entities/book.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm';
 

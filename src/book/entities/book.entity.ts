@@ -1,7 +1,7 @@
 import { IsString, IsDate, IsInt, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity({ name: 'books', synchronize: true })
 export class Book {

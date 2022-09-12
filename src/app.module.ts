@@ -6,6 +6,12 @@ import { BookModule } from './book/book.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostModule } from './post/post.module';
+import { User } from './user/entities/user.entity';
+import { Book } from './book/entities/book.entity';
+import { Post } from './post/entities/post.entity';
+import { TypeOrmExModule } from './common/typeorm.module';
+import { BookRepository } from './book/repository/book.repository';
+import { UserRepository } from './user/repository/user.repository';
 
 @Module({
   imports: [
@@ -19,7 +25,9 @@ import { PostModule } from './post/post.module';
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
+      entities: [User, Post, Book],
     }),
+    TypeOrmExModule.forCustomRepository([BookRepository, UserRepository]),
     UserModule,
     BookModule,
     PostModule,
