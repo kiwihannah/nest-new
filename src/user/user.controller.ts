@@ -10,7 +10,9 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
