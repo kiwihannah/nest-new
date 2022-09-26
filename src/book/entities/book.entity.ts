@@ -1,12 +1,10 @@
-import { IsString, IsDate, IsInt, IsBoolean } from 'class-validator';
+import { IsString, IsDate } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
 
-@Entity({ name: 'books', synchronize: true })
+@Entity({ name: 'books' })
 export class Book {
   @ApiProperty()
-  @IsInt()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,25 +14,43 @@ export class Book {
   title: string;
 
   @ApiProperty()
-  @IsInt()
+  @IsString()
   @Column()
   author: string;
 
   @ApiProperty()
-  @IsBoolean()
+  @IsDate()
+  @Column({
+    name: 'rent_time',
+    type: 'timestamp',
+    nullable: true,
+  })
+  rentTime: Date;
+
+  @ApiProperty()
+  @IsString()
   @Column()
-  isAvailable: boolean;
+  key: string;
 
   @ApiProperty()
   @IsDate()
-  @Column()
-  createdAt: Date;
+  @Column({
+    name: 'create_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createTime: Date;
 
   @ApiProperty()
   @IsDate()
-  @Column()
-  UpdatedAt: Date;
+  @Column({
+    name: 'update_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    nullable: true,
+  })
+  updateTime: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
-  user: User;
+  // @ManyToOne(() => User, (user) => user.id)
+  // user: User;
 }
