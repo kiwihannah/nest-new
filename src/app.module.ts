@@ -4,11 +4,13 @@ import { AppService } from './app.service';
 import { BookModule } from './book/book.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { YoutubeModule } from './youtube/youtube.module';
+import { FirebaseModule } from 'nestjs-firebase';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.development.env',
+      envFilePath: '.env',
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
@@ -21,8 +23,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-
+    FirebaseModule.forRoot({
+      googleApplicationCredential: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    }),
     BookModule,
+    YoutubeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

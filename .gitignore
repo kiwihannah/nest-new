@@ -35,7 +35,10 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # .env
-.development.env
+.env
 
 #.husky/
 .husky/
+
+# google
+credentials/
